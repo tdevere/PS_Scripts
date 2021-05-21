@@ -9,5 +9,4 @@
 ## [Analytic Portal Custom Version Sorting](/AnalyticPortalCustomVersionSorting.ps1)
 * [App Center Analytic Portal](https://docs.microsoft.com/en-us/appcenter/analytics/overview#active-users-per-version) sort uses the name of the version to determine the latest version. This alphabetical sorting may impact
 the ability to determine the correct "latest version". 
-*  If this is inconvenient you may pull the all version data from the API into JSON restuls and then use custom sorting.
-
+*  If this is inconvenient you may pull the all version data from the API into JSON results and then use custom sorting.
