@@ -103,6 +103,8 @@ $json =
 }
 "@
 
+
+
     $sendEventResults = Invoke-WebRequest -Uri $apiUri -Method Post -Body ($json) -Headers $headers -ContentType "application/json" | ConvertFrom-Json 
     Write-Output "Send-Event result $sendEventResults"
     }
