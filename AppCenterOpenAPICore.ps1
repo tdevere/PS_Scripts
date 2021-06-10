@@ -172,6 +172,18 @@ function GetListOfTeams
 
 #NEXT ITEM https://openapi.appcenter.ms/#/account/orgInvitations_listPending
 
+function GetListOfPendingInvitations
+{
+    param (
+        [string]
+        $OrgName    
+    )
+    #https://openapi.appcenter.ms/#/account/orgInvitations_listPending
+    #Gets the pending invitations for the organization
+    $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/invitations'
+    CoreFunctionByUri -URI $uri
+}
+
 function GetAppByName
 {
     param (
@@ -270,4 +282,5 @@ function GetAzureSubscriptionsForUser
 #GetListOfAppsByUserName -OrgName "Examples"  -UserName "tdevere-microsoft.com"
 #GetUserByOrgName
 #GetListOfTestersByOrg -OrgName "Examples"
-GetListOfTeams -OrgName "Examples"
+#GetListOfTeams -OrgName "Examples"
+GetListOfPendingInvitations -OrgName "Examples"
