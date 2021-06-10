@@ -116,6 +116,7 @@ function GetListOfTestersByOrg
         $OrgName    
     )
     #https://openapi.appcenter.ms/#/account/distributionGroups_listAllTestersForOrg
+    #Returns a unique list of users including the whole organization members plus testers in any shared group of that org
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/testers'
     CoreFunctionByUri -URI $uri
 }
