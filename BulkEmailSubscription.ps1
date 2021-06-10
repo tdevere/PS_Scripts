@@ -7,10 +7,10 @@ $appCenterApi = $env:appcenterapi
 # {baseEmailAddress}+{NewID}@gmail.com
 # messages will be received at {baseEmailAddress}@gmail.com
 
-$baseEmail = "akdevere" #Replace with your own gmail for this test to work
-$owner_name = "Examples" #Replace with your Org/Owner Name
-$app_name = "Android_Xamarin2" #Replace with your App Name
-$distribution_group = "NewGroup" #Replace with your Distribution Group name
+$baseEmail = "" #Replace with your own gmail for this test to work
+$owner_name = "" #Replace with your Org/Owner Name
+$app_name = "" #Replace with your App Name
+$distribution_group = "" #Replace with your Distribution Group name
 $invitationList = New-Object 'Collections.Generic.List[string]'
 $UseBulkProcessing = $true #Send mulitple emails at the same time
 $bulkBuffer = 10 #Not sure what the limit is on ingestion side 
