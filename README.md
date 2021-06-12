@@ -18,18 +18,4 @@ the ability to determine the correct "latest version".
     * Lack any exception handling; may be difficult if some operations fail; should put in a rety list
 
 ## [Auto Renew Disabled Exports in App Center](/ExportConfigNotification.ps1)
-* Export of Analytic Data was Disabled - You find your analytics export data was disabled recently. Although you can reenable, these questions remain:
-1. Why/Who disabled export? 
-2. Can export data be restored while it was not enabled?
-3. What options exist to be notified if this situation happens again? 
-
-* Why/Who disabled analytics export?
-There are two sources for disabling analytic export: user or azure driven. If App Center receives some types of failures from Azure, we may automatically disable export. This happens without notification. Otherwise, only an App Center User would disable analytics. 
-* Can the missing data be restored?
-** Data going to App Insights will only stay around for 48 hours. 
-** If the export is reenabled within that time, data will flow with the backup. 
-** Anything past 48 hours is lost • Data going to blob has 30 days 
-** If the export is reenabled within that time, data will flow with the backup ○ Anything past 30 days is lost
-
-* What options exist to be notified?
-** There is no automatic notification. However, you can use the https://openapi.appcenter.ms/#/export/ExportConfigurations_Get API and query on a schedule to check the status. If it is disabled, you can take restoration action. This script is provide to assist you with this effort. [Auto Renew Disabled Exports in App Center](/ExportConfigNotification.ps1)
+* Export of Analytic Data was Disabled - You find your analytics export data was disabled recently. Although you can reenable, you need a way to auto enable if this condition happens or you risk losing Analytic data. Although App Center provides no automatic notification you can use the https://openapi.appcenter.ms/#/export/ExportConfigurations_Get API and query on a schedule to check the status. If it is disabled, you can take restoration action. This script is provide to assist you with this effort. [Auto Renew Disabled Exports in App Center](/ExportConfigNotification.ps1)
