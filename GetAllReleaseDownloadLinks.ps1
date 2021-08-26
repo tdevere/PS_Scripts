@@ -13,11 +13,8 @@ function GetReleaseDetails
         [string]$release_id
         )
 
-    $appUri = 'https://api.appcenter.ms/v0.1/apps/' + $owner_name + '/' + $app_name + '/releases/' + $release_id
-    $appUri
-
-    $release_detail = curl.exe -X GET $appUri -H "accept: application/json" -H $apitoken | ConvertFrom-Json
-    $release_detail
+    $appUri = 'https://api.appcenter.ms/v0.1/apps/' + $owner_name + '/' + $app_name + '/releases/' + $release_id   
+    $release_detail = curl.exe -X GET $appUri -H "accept: application/json" -H $apitoken | ConvertFrom-Json    
     $FinalReleaseList.Add($release_id, $release_detail.download_url)
     
 }
