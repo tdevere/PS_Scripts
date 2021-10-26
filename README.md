@@ -22,4 +22,4 @@ the ability to determine the correct "latest version".
 * 10/2/2021 - App Center has a known issue which is yet to be fixed. When the automatic disable event occurs, re-enabling export does not backfill data as the documentation suggests happens when you initially setup export. The only way as of today to get backfill data, is to delete the export and then create the export again. If you are using this script or similar approach, you are less impacted as the only data lost would be between the time the export was disabled and when the script enables export again. 
 
 ## [Generate List of Download Links to Each App Release](/GetAllReleaseDownloadLinks.ps1)
-* On occasion the install.appcenter.ms portal may not display releases is a useful way. Some views my prevent you from finding the downoload link for a particular release. This script will help you discover the download link for all available releases.
+* On occasion the install.appcenter.ms portal may not display releases is a useful way. Some views my prevent you from finding the download link for a particular release. This script will help you discover the download link for all available releases.
