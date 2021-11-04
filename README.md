@@ -24,3 +24,8 @@ the ability to determine the correct "latest version".
 
 ## [Generate List of Download Links to Each App Release](/GetAllReleaseDownloadLinks.ps1)
 * On occasion the install.appcenter.ms portal may not display releases is a useful way. Some views my prevent you from finding the download link for a particular release. This script will help you discover the download link for all available releases.
+
+## [Clone Branch Confiruation](/CloneBranchBuildConfig.ps1)
+* Perhaps you need to modify the branch configuration for a large number of Apps. The portal is not the best tool for this job. Instead, check out this script for an example on how to:
+    1. Clone an existing branch
+    2. Set a branch configuration on a new branch
