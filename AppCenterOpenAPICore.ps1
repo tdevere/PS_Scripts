@@ -27,8 +27,6 @@ if ($runOncePerSession)
         curl.exe -X GET $uri -H "accept: application/json" -H "X-API-Token: $appCenterApi" | Out-File 'c:\temp\sample.json'
         $apps = curl.exe -X GET $uri -H "accept: application/json" -H "X-API-Token: $appCenterApi" | ConvertFrom-Json
         $AppList.Add($apps)
-        $AppList.Count
-        $app = $AppList[0] | Where-Object { $_.name -eq "Kent-G-UWP-Experiments" }    
 
     }
 }
