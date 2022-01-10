@@ -29,3 +29,6 @@ the ability to determine the correct "latest version".
 * Perhaps you need to modify the branch configuration for a large number of Apps. The portal is not the best tool for this job. Instead, check out this script for an example on how to:
     1. Clone an existing branch
     2. Set a branch configuration on a new branch
+
+## [Disable Old Releases](/DisableOldReleases.ps1)
+* As releases pile up you may begin to notice timeouts when accessing the install.appcenter.ms portal. There is no pagination when pulling results for releases in AppCenter, therefore some odd behavior can pop up when you begin to have a large result set from this data. One workaround to this behavior would be to disable older releases. 
