@@ -32,3 +32,6 @@ the ability to determine the correct "latest version".
 
 ## [Disable Old Releases](/DisableOldReleases.ps1)
 * As releases pile up you may begin to notice timeouts when accessing the install.appcenter.ms portal. There is no pagination when pulling results for releases in AppCenter, therefore some odd behavior can pop up when you begin to have a large result set from this data. One workaround to this behavior would be to disable older releases. 
+
+## [Compare AI to Blob Export data from AppCenter Analytic Data](/Match_Blob_AI_Export_From_AppCenter_Analytics.ps1)
+* Are you concerned that the data from App Center Export is consistent between AI and Blob storage? Using Export Data, we can pull out a list of Blob.CorrelationId and pull out matching values within AI.operation_Id and build a combined view to better understand this relationship.
