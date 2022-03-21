@@ -33,7 +33,6 @@ function SecurityCheck_IsAuthorizedEmail
             [string] $ValidEmailDomain
         )
 
-    $NotAuthorizedUserList = New-Object 'Collections.Generic.List[string]'
     $RemoveList = @{}
 
     foreach ($user in $Users)
@@ -42,8 +41,7 @@ function SecurityCheck_IsAuthorizedEmail
         $email_domain = $user.ToString().Remove(0, $AtIndex+1)
         
         if ($email_domain.ToString().ToLower() -ne $ValidEmailDomain.ToString().ToLower()) 
-        {
-            $NotAuthorizedUserList.Add($user)            
+        {       
             $userDetails = $CurrentListOfOrgUsers | Where-Object { $_.email -eq $user } | Select-Object email, name
             $RemoveList.Add($userDetails.name, $userDetails.email)
             Write-Host "Security Alert - $user registered email is not a member of $ValidEmailDomain" -ForegroundColor Red
@@ -68,6 +66,7 @@ function RemoveUnauthorizedUsersFromOrg
     $curlUrl = 'https://api.appcenter.ms/v0.1/orgs/' + $Organization_Name + '/users/'
 
     $constent =  'N' #Permission to remove user; No By Default
+
     foreach ($userName in $RemoveUserList.Keys)
     {
 
