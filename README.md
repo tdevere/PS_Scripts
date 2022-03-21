@@ -35,3 +35,6 @@ the ability to determine the correct "latest version".
 
 ## [Compare AI to Blob Export data from AppCenter Analytic Data](/Match_Blob_AI_Export_From_AppCenter_Analytics.ps1)
 * Are you concerned that the data from App Center Export is consistent between AI and Blob storage? Using Export Data, we can pull out a list of Blob.CorrelationId and pull out matching values within AI.operation_Id and build a combined view to better understand this relationship.
+
+## [Validate Organization Members Email](/Membership_Security.ps1)
+* As of 3/21/2022 App Center does not provide security features such as account membership restriction based on Identity Provider or email domain restrictions. This script demonstrates how to query the Organization members and evaluate if their account was created using an email which resided within their respective domain/identity provider. 

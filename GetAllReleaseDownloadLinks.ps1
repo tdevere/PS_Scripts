@@ -1,8 +1,8 @@
 Clear-Host
 $apitoken = '"X-API-Token: ' + $env:appcenterapi + '"' #You need your own Token Here
-$owner_name = "Examples"
-$app_name = "ThreeAmigos_Android"
-$scope = "tester"
+$owner_name = "AppCenterSupportDocs"
+$app_name = "Download_Speed"
+$scope = #"tester"
 $published_only = "true"
 $FinalReleaseList = New-Object System.Collections.Generic.Dictionary"[String,String]"
 
