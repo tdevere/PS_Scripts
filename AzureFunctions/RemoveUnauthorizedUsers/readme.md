@@ -1,5 +1,8 @@
 # TimerTrigger - PowerShell
 
+## REFERENCE
+This sample was created initially from following this Microsoft support article: https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=csharp
+
 The `TimerTrigger` makes it incredibly easy to have your functions executed on a schedule. This sample demonstrates a simple use case of calling your function every 1 minute.
 
 ## How it works
