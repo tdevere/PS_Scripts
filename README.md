@@ -38,4 +38,4 @@ the ability to determine the correct "latest version".
 
 ## [Validate Organization Members Email](/Membership_Security.ps1)
 * As of 3/21/2022 App Center does not provide security features such as account membership restriction based on Identity Provider or email domain restrictions. This script demonstrates how to query the Organization members and evaluate if their account was created using an email which resided within their respective domain/identity provider.
-* To Automate this script to run every minute, take a look at [the following Sample](/AzureFunctions\RemoveUnauthorizedUsers\readme.md) which uses an Azure Function Proxy triggered by a timer, and removes unauthorized users from your Organization.
+* To Automate this script to run every minute, take a look at [the following Sample](/AzureFunctions/RemoveUnauthorizedUsers/readme.md) which uses an Azure Function Proxy triggered by a timer, and removes unauthorized users from your Organization.
