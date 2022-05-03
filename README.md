@@ -39,3 +39,6 @@ the ability to determine the correct "latest version".
 ## [Validate Organization Members Email](/Membership_Security.ps1)
 * As of 3/21/2022 App Center does not provide security features such as account membership restriction based on Identity Provider or email domain restrictions. This script demonstrates how to query the Organization members and evaluate if their account was created using an email which resided within their respective domain/identity provider.
 * To Automate this script to run every minute, take a look at [the following Sample](/AzureFunctions/RemoveUnauthorizedUsers/readme.md) which uses an Azure Function Proxy triggered by a timer, and removes unauthorized users from your Organization.
+
+##[Is Repo Connection Valid](/IsRepoConnectionValid.ps1)
+* If you use App Center for build services, occassionally your repo connection may become invalid. At that time, you cannot view build configuration or branch information from the App Center portal. You will see a reconnection notice banner and an error indicating there was an error loading branches. Typically you find this after learning of a build failure. If you wanted to get an early warning, try scheduling a azure function app using this sample and setup your own notification process when a connection goes down for any reason.
