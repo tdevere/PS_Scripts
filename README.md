@@ -1,4 +1,10 @@
-# PowerShell_Scripts
+# PowerShell_Scripts - App Center Samples
+
+## Purpose and Prerequisites
+This repo is a collection of scripts developed for specific customer situations which might be benefical to others facing the same issues. Take a look at [PowerShell](https://docs.microsoft.com/en-us/powershell/) and [App Center Open API](https://openapi.appcenter.ms/#/account), if you are unfamilar with these subjects. Also, each script requires that you have access to an [App Center API Token](https://docs.microsoft.com/en-us/appcenter/api-docs/#creating-an-app-center-app-api-token) along with basic details like Owner and App Name. Finally, if you plan on using the Azure related samples, you'll clearly need an Azure subscription to work out these samples. 
+
+## Support 
+The scripts no doubt could be improved, so please make recommendations and we'll work to get these incorporated where it makes sense. None of these are offically supported solutions via App Center. However, if you run into general issues that simply need review, I'll be happy to help - just open a bug and I'll get to this as fast as I can. 
 
 ## [Analytic Performance](/AnalyticPerformance.ps1)
 * Script used to measure analytic performance. 
