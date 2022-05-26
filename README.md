@@ -4,7 +4,7 @@
 This repo is a collection of scripts developed for specific customer situations which might be benefical to others facing the same issues. Take a look at [PowerShell](https://docs.microsoft.com/en-us/powershell/) and [App Center Open API](https://openapi.appcenter.ms/#/account), if you are unfamilar with these subjects. Also, each script requires that you have access to an [App Center API Token](https://docs.microsoft.com/en-us/appcenter/api-docs/#creating-an-app-center-app-api-token) along with basic details like Owner and App Name. Finally, if you plan on using the Azure related samples, you'll clearly need an Azure subscription to work out these samples. 
 
 ## Support 
-The scripts no doubt could be improved, so please make recommendations and we'll work to get these incorporated where it makes sense. None of these are offically supported solutions via App Center. However, if you run into general issues that simply need review, I'll be happy to help - just open a bug and I'll get to this as fast as I can. 
+The scripts found here no doubt could be improved, so please make recommendations and we'll work to get these incorporated where it makes sense. None of these are offically supported solutions via App Center. However, if you run into general issues that simply need review, I'll be happy to help - just open a bug and I'll get to this as fast as I can. 
 
 ## [Analytic Performance](/AnalyticPerformance.ps1)
 * Script used to measure analytic performance. 
@@ -48,3 +48,15 @@ the ability to determine the correct "latest version".
 
 ## [Is Repo Connection Valid](/IsRepoConnectionValid.ps1)
 * If you use App Center for build services, occassionally your repo connection may become invalid. At that time, you cannot view build configuration or branch information from the App Center portal. You will see a reconnection notice banner and an error indicating there was an error loading branches. Typically you find this after learning of a build failure. If you wanted to get an early warning, try scheduling a azure function app using this sample and setup your own notification process when a connection goes down for any reason.
+
+## [Your Apple Store Credentials are no longer valid. Please re-authenticate](/ServiceConnection.ps1)
+* Apple Store connections are set to expire (policy enforced by Apple) about every 30 days. When this happens, the original App Center account which configured the store connection must be available and ready to respond to reconnect request. MFA is also no required (policy enforced by Apple) and therefore, this account must also be able to fullfill the MFA request at the same time. 
+* What happens if they are not available? Your options are limited.
+    * If you replace the connection, you lose build history and configurations - forever. This is not recoverable and most often not preferred.
+    * You might open a support case with App Center support and request the connection be replaced with the credentials of another App Center user, who has access to utilize the store connection and administer the connection via App Center. This is a good option but it takes time for support to process the request.
+    * Avoid the situation altogether - this is the best option. To that end, to prevent this situation completely, you will want to manage the lifecycle of the connection. To that end, please consider the following approach
+* Avoidance - not great for relationships but useful in managing not so great CI/CD process out of our control...
+    * Get the existing expiration date using the script found in this section
+    * This gets you the expiration for the token. You can use this to automate some notification, or configure a reminder for responsible parties to be available to make the reconnection attempt. 
+    * If waiting to find the problem is a concern (taking too long) consider using the [Is Repo Connection Valid](/IsRepoConnectionValid.ps1) found in this repo. If the connection is faulted, you can automate a notification process and signal the correct team to update the connection. 
+    * Create a generic App Center account which also has access to utilize the store connection and administer the App Center Org/Apps using the connection. This account should be accessible to a team of people who can also respond to the MFA request associated with the reconnection effort. 
