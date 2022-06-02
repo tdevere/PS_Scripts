@@ -46,7 +46,7 @@ function BuildOrgAppList
 
         if ($CacheResults)
         {
-            $OrgAppList | Out-File -FilePath $cacheFileName
+            $OrgAppList | Out-File -FilePath $cacheFile
         }
     }
 
