@@ -254,6 +254,33 @@ function GetAzureSubscriptionsForUser
 
 #region begin POST_Request
 #First Line
+
+function NewAppCenter_Org
+{
+    #https://openapi.appcenter.ms/#/account/organizations_createOrUpdate
+    #Creates a new organization and returns it to the caller
+    
+    $headers = @{    
+        "X-API-Token" = $appCenterApi
+        "accept" = "application/json"
+        "Content-Type" = "application/json"
+    }
+
+$body = 
+@"
+{
+    "display_name": "$ORGNAME",
+    "name": "$ORGNAME"
+  }
+"@
+
+$body
+
+    $results = Invoke-WebRequest -Uri "https://api.appcenter.ms/v0.1/orgs" -Method Post -Body ($body) -Headers $headers | ConvertFrom-Json   
+
+    $results
+}
+
 #endregion
 
 #region begin PATCH_Request
@@ -282,4 +309,4 @@ function GetAzureSubscriptionsForUser
 #GetUserByOrgName
 #GetListOfTestersByOrg -OrgName "Examples"
 #GetListOfTeams -OrgName "Examples"
-GetListOfPendingInvitations -OrgName "Examples"
+#GetListOfPendingInvitations -OrgName "Examples"
