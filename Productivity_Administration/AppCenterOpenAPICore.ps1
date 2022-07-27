@@ -257,6 +257,8 @@ function GetAzureSubscriptionsForUser
 
 function NewAppCenter_Org
 {
+    Param([string]$orgname)
+
     #https://openapi.appcenter.ms/#/account/organizations_createOrUpdate
     #Creates a new organization and returns it to the caller
     
@@ -269,8 +271,8 @@ function NewAppCenter_Org
 $body = 
 @"
 {
-    "display_name": "$ORGNAME",
-    "name": "$ORGNAME"
+    "display_name": "$orgname",
+    "name": "$orgname"
   }
 "@
 
