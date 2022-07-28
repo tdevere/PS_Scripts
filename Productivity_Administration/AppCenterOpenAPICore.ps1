@@ -34,7 +34,7 @@ if ($runOncePerSession)
 #region begin OpenApi_Accounts
 
 #region begin GET_Requests
-function CoreFunctionByUri
+function CoreGETFunctionByUri
 {
     param (
         [string]
@@ -42,28 +42,28 @@ function CoreFunctionByUri
     )
 
     #All the changes for these calls is the URI
-    curl.exe -X GET $uri -H  "accept: application/json" -H  "X-API-Token: $appCenterApi" | ConvertFrom-Json
+    curl.exe -X GET $uri -H "accept: application/json" -H "X-API-Token: $appCenterApi" | ConvertFrom-Json
 }
 
 function GetUserMetadata
 {
     #https://openapi.appcenter.ms/#/account/Users_getUserMetadata    
     $uri = 'https://api.appcenter.ms/v0.1/user/metadata/optimizely'
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetSharedConnections
 {
     #https://openapi.appcenter.ms/#/account/sharedconnection_Connections    
     $uri = 'https://api.appcenter.ms/v0.1/user/export/serviceConnections'    
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetUser
 {
     #https://openapi.appcenter.ms/#/account/users_get  
     $uri = 'https://api.appcenter.ms/v0.1/user/'    
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetListOfAppsByUserName
@@ -78,7 +78,7 @@ function GetListOfAppsByUserName
     #NOTE: Use GetUser function to get name property
 
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/users/' + $UserName + "/apps"
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetUserByOrgName
@@ -93,7 +93,7 @@ function GetUserByOrgName
     #NOTE: Use GetUser function to get name property
 
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/users/' + $UserName
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetListOfUsersByOrg
@@ -104,7 +104,7 @@ function GetListOfUsersByOrg
     )
     #https://openapi.appcenter.ms/#/account/users_listForOrg
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/users'
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetListOfTestersByOrg
@@ -116,7 +116,7 @@ function GetListOfTestersByOrg
     #https://openapi.appcenter.ms/#/account/distributionGroups_listAllTestersForOrg
     #Returns a unique list of users including the whole organization members plus testers in any shared group of that org
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/testers'
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetListOfUsersByTeamName
@@ -129,7 +129,7 @@ function GetListOfUsersByTeamName
     )
     #https://openapi.appcenter.ms/#/account/teams_getUsers
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/teams/' + $TeamName
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetListOfAppsByTeamName
@@ -142,7 +142,7 @@ function GetListOfAppsByTeamName
     )
     #https://openapi.appcenter.ms/#/account/teams_getUsers
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/teams/' + $TeamName + '/apps'
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetTeamByName
@@ -155,7 +155,7 @@ function GetTeamByName
     )
     #https://openapi.appcenter.ms/#/account/teams_getUsers
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/teams/' + $TeamName
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetListOfTeams
@@ -166,7 +166,7 @@ function GetListOfTeams
     )
     #https://openapi.appcenter.ms/#/account/teams_listAll
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/teams'
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 #NEXT ITEM https://openapi.appcenter.ms/#/account/orgInvitations_listPending
@@ -180,25 +180,25 @@ function GetListOfPendingInvitations
     #https://openapi.appcenter.ms/#/account/orgInvitations_listPending
     #Gets the pending invitations for the organization
     $uri = 'https://api.appcenter.ms/v0.1/orgs/'+ $OrgName + '/invitations'
-    CoreFunctionByUri -URI $uri
+    CoreGETFunctionByUri -URI $uri
 }
 
 function GetAppByName
 {
-    param (
-        [string]
-        $ApplicationName        
-    )
+    #https://openapi.appcenter.ms/#/account/apps_get
+    Param([string]$ownerName,[string]$appName)
 
-    $GetAppByNameList = New-Object 'Collections.Generic.List[PSCustomObject]'
-    $app = $AppList[0] | Where-Object { $_.name -eq $ApplicationName }   
-    foreach ($app in $AppList)
-    {
-        $GetAppByNameTemp = $app | Where-Object { $_.name -eq $ApplicationName }
-        $GetAppByNameList.Add($GetAppByNameTemp)
-    }
-    
-    $GetAppByNameList
+    $uri = "https://api.appcenter.ms/v0.1/apps/$ownerName/$appName"
+    $uri
+$headers = @{    
+    "accept" = "application/json"    
+    "X-API-Token" = $AppCenterAPI
+    "Content-Type" = "application/json"
+}
+
+    $results = Invoke-WebRequest -Uri $uri -Method Get -Headers $headers | ConvertFrom-Json   
+
+    $results
 }
 
 function GetOrgByName
@@ -207,8 +207,7 @@ function GetOrgByName
         [string]
         $OrgName        
     )
-     
-    $OrgList | Where-Object {$_.name -eq $OrgName }
+
    
 }
 
@@ -255,13 +254,23 @@ function GetAzureSubscriptionsForUser
 #region begin POST_Request
 #First Line
 
+function CorePOSTFunction
+{
+    param ([string]$URI, [string]$Body, [string]$Headers)
+
+    #All the changes for these calls is the URI
+    $results = Invoke-WebRequest -Uri "https://api.appcenter.ms/v0.1/orgs" -Method Post -Body ($body) -Headers $headers | ConvertFrom-Json   
+    return $results
+}
+
 function NewAppCenter_Org
 {
     Param([string]$orgname)
 
     #https://openapi.appcenter.ms/#/account/organizations_createOrUpdate
     #Creates a new organization and returns it to the caller
-    
+    $uri = "https://api.appcenter.ms/v0.1/orgs"
+
     $headers = @{    
         "X-API-Token" = $appCenterApi
         "accept" = "application/json"
@@ -275,18 +284,84 @@ $body =
     "name": "$orgname"
   }
 "@
-
-$body
-
-    $results = Invoke-WebRequest -Uri "https://api.appcenter.ms/v0.1/orgs" -Method Post -Body ($body) -Headers $headers | ConvertFrom-Json   
-
+    $results = CorePOSTFunction -URI $uri -Body ($body) -Headers $headers | ConvertFrom-Json   
     $results
+}
+
+function NewAppCenterOrg_App
+{
+    Param([string]$orgname, [string]$description, [string]$release_type, [string]$name, [string]$display_name, [string]$os, [string]$platform)
+
+    #https://openapi.appcenter.ms/#/account/apps_create
+    #Creates a new app and returns it to the caller
+$uri = "https://api.appcenter.ms/v0.1/orgs/$orgname/apps"
+
+$headers = @{    
+    "accept" = "application/json"    
+    "X-API-Token" = $AppCenterAPI
+    "Content-Type" = "application/json"
+}
+
+$body = 
+@"
+{
+    "description": "$description",
+    "release_type": "$release_type",
+    "display_name": "$display_name",
+    "name": "$name",        
+    "os": "$os",
+    "platform": "$platform"
+  }
+"@
+
+$results = CorePOSTFunction -URI $uri -Body ($body) -Headers $headers | ConvertFrom-Json   
+$results
+
 }
 
 #endregion
 
 #region begin PATCH_Request
 #First Line
+
+function CorePATCHFunction
+{
+    param ([string]$URI, [string]$Body, [string]$Headers)
+
+    #All the changes for these calls is the URI
+    $results = Invoke-WebRequest -Uri "https://api.appcenter.ms/v0.1/orgs" -Method Post -Body ($body) -Headers $headers | ConvertFrom-Json   
+    return $results
+}
+
+function UpdateAppcenter_App
+{
+    #https://openapi.appcenter.ms/#/account/apps_update
+    #Partially updates a single app
+
+    Param([string]$ownerName,[string]$Existing_appName, [string]$new_display_name, [string]$new_name)
+
+    $uri = "https://api.appcenter.ms/v0.1/apps/$ownerName/$Existing_appName"
+
+$headers = @{    
+    "accept" = "application/json"    
+    "X-API-Token" = $AppCenterAPI
+    "Content-Type" = "application/json"
+}
+
+#Only updating names here but you can do more. visit the open api link for more details
+$body = 
+@"
+{
+    "display_name": "$new_display_name",
+    "name": "$new_name"        
+}
+"@
+
+    $results = CorePATCHFunction -URI $uri -Body ($body) -Headers $headers | ConvertFrom-Json   
+    $results
+}
+
+
 #endregion
 
 #region begin DELETE_Request
