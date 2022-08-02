@@ -16,6 +16,8 @@ $UseBulkProcessing = $true #Send mulitple emails at the same time
 $bulkBuffer = 10 #Not sure what the limit is on ingestion side 
 $FinalEmailList = New-Object 'Collections.Generic.List[string]'
 
+#Region: Sample Bulk Email Operations
+
 function GenerateSampleEmails {
     #Otherwise, supply your own values; this is for sample purposes only
     for ($i = 1; $i -le 13; $i++)
@@ -64,57 +66,66 @@ function GetBatchRange
         
 }
 
-GenerateSampleEmails #Enabled for sample only;
-
-#https://openapi.appcenter.ms/#/account/distributionGroups_addUser
-#Adds the members to the specified distribution group
-# Example
-
-$curlUrl = 'https://api.appcenter.ms/v0.1/apps/' + $owner_name + '/' + $app_name + '/distribution_groups/' + $distribution_group + '/members'
-
-
-if ($UseBulkProcessing)
+function NewUserAddToDistributionGroup
 {
-    $bulkEmailList = New-Object 'Collections.Generic.List[string]'    
-    $startCount = $invitationList.Count    
-    $wholePart = [System.Math]::Truncate(($startCount / $bulkBuffer))
-    $remainder = ($startCount % $bulkBuffer)
+    GenerateSampleEmails #Enabled for sample only;
 
-    $rangeRemainder = $invitationList.GetRange(0, $remainder) #grab the remainder first in bulk
-    foreach ($r in $rangeRemainder)
-    {
-        $r
-        GetBatchRange -range $r
-    }
+    #https://openapi.appcenter.ms/#/account/distributionGroups_addUser
+    #Adds the members to the specified distribution group
+    # Example
     
-    $startIndex = $remainder
-    for ($i = 1; $i -le $wholePart; $i++) #stop when we hit that number
+    $curlUrl = 'https://api.appcenter.ms/v0.1/apps/' + $owner_name + '/' + $app_name + '/distribution_groups/' + $distribution_group + '/members'
+    
+    
+    if ($UseBulkProcessing)
     {
-        Write-Host $startIndex":"$bulkBuffer
-        $wholeRemainder = $invitationList.GetRange($startIndex, $bulkBuffer)
-        Write-Host "Whole Remainder: " $wholeRemainder.Count
-        GetBatchRange -range $wholeRemainder
-        $startIndex = $startIndex+$bulkBuffer  #incrmenet count by $bulkBuffer
+        $bulkEmailList = New-Object 'Collections.Generic.List[string]'    
+        $startCount = $invitationList.Count    
+        $wholePart = [System.Math]::Truncate(($startCount / $bulkBuffer))
+        $remainder = ($startCount % $bulkBuffer)
+    
+        $rangeRemainder = $invitationList.GetRange(0, $remainder) #grab the remainder first in bulk
+        foreach ($r in $rangeRemainder)
+        {
+            $r
+            GetBatchRange -range $r
+        }
+        
+        $startIndex = $remainder
+        for ($i = 1; $i -le $wholePart; $i++) #stop when we hit that number
+        {
+            Write-Host $startIndex":"$bulkBuffer
+            $wholeRemainder = $invitationList.GetRange($startIndex, $bulkBuffer)
+            Write-Host "Whole Remainder: " $wholeRemainder.Count
+            GetBatchRange -range $wholeRemainder
+            $startIndex = $startIndex+$bulkBuffer  #incrmenet count by $bulkBuffer
+        }
+    
+        foreach ($email in $FinalEmailList)
+        {     
+            $emailList = '"{\"user_emails\":[' + $email + ']}"' #| ConvertFrom-Json
+            $emailList    
+            $curlUrl
+            curl -X POST $curlUrl -H "Content-Type: application/json" -H "accept: application/json" -H "X-API-Token: $appCenterApi" -d $emailList
+        }
     }
+    else 
+    {
+        #use 1 x 1 method of invite
+        foreach ($email in $invitationList)
+        {     
+            $emailList = '"{\"user_emails\":[\"' + $email + '\"]}' #| ConvertFrom-Json
+            $emailList    
+            $curlUrl
+            curl -X POST $curlUrl -H "Content-Type: application/json" -H "accept: application/json" -H "X-API-Token: $appCenterApi" -d $emailList
+        }
+    }
+}
 
-    foreach ($email in $FinalEmailList)
-    {     
-        $emailList = '"{\"user_emails\":[' + $email + ']}"' #| ConvertFrom-Json
-        $emailList    
-        $curlUrl
-        curl -X POST $curlUrl -H "Content-Type: application/json" -H "accept: application/json" -H "X-API-Token: $appCenterApi" -d $emailList
-    }
-}
-else 
-{
-    #use 1 x 1 method of invite
-    foreach ($email in $invitationList)
-    {     
-        $emailList = '"{\"user_emails\":[\"' + $email + '\"]}' #| ConvertFrom-Json
-        $emailList    
-        $curlUrl
-        curl -X POST $curlUrl -H "Content-Type: application/json" -H "accept: application/json" -H "X-API-Token: $appCenterApi" -d $emailList
-    }
-}
+#End Region
+
+
+
+
 
 
