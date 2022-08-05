@@ -1,0 +1,41 @@
+
+#Protecting API token - Get your own
+$appCenterApi = $env:appcenterapi
+
+function Get-ErrorGroups
+{
+    param
+    (
+        [Parameter(Mandatory)]
+        [String]$OrgName,
+        [Parameter(Mandatory)]
+        [String]$AppName,
+        [Parameter(Mandatory=$false)]
+        [String]$StartDateTime= (Get-Date (Get-Date).ToUniversalTime().AddDays(-90) -UFormat '+%Y-%m-%dT%H:%M:%S.000Z').ToString(), #Start date time in data in ISO 8601 date time format
+        [Parameter(Mandatory=$false)]
+        [String]$Top='0', #The maximum number of results to return. (0 will fetch all results till the max number.)
+        [Parameter(Mandatory=$false)]
+        [String]$Token=$appCenterApi        
+    )  
+
+    #https://openapi.appcenter.ms/#/errors/Errors_GroupList
+    #List of error groups  
+    
+    Write-Host "Checking for Error Groups for" $OrgName"/"$AppName
+    
+    $uri = [string]::Format('https://api.appcenter.ms/v0.1/apps/{0}/{1}/errors/errorGroups?start={2}&%24orderby=count%20desc&%24top={3}', $AppName, $OrgName, $StartDateTime, $Top)       
+    
+    $errGroups = curl.exe -X GET $uri -H  "accept: application/json" -H  "X-API-Token: $appCenterApi" | ConvertFrom-Json    
+    
+    if ($errGroups.errorGroups.Count -ne "0")
+    {
+        Write-Host "Results Found"
+        $UpdatedDetails = New-Object 'Collections.Generic.List[PSCustomObject]'
+        $UpdatedDetails += New-Object -TypeName psobject -Property @{OrgName=$OrgName; AppName=$AppName; errorGroups=$errGroups.errorGroups}        
+        $CompleteErrorGroupsList.Add($UpdatedDetails)         
+        
+    }
+}
+
+
+Get-ErrorGroups -OrgName Examples -AppName 
