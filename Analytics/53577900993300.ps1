@@ -1,14 +1,15 @@
 Clear-Host
 
 ### LOG FLOW PERFORMANCE TEST
+### Plug in values here and run the script
 
 $APIKey = $env:appcenterapi #Plug your own in here
-$OwnerName = "Examples" #Plug your own in here
-$App_Name = "Android_Xamarin" #Plug your own in here
+$OwnerName = "" #Plug your own in here
+$App_Name = "" #Plug your own in here
 $apiUri = "https://in.appcenter.ms/logs?api-version=1.0.0"
 $sid = [Guid]::NewGuid() #This is the identifier for the new session. Just keeps this unique. It will be used to pull out only relevant data from logflow
-$AppSecret = "43448a3c-1a36-493e-bdc0-4eefed484e19"#$env:AppCenterPowerShell #Plug your own in here
-$InstallID = [Guid]::NewGuid() #'d5cd012b-a97e-483d-8a1f-b67d5b707e64'
+$AppSecret = "" #Plug your own in here
+$InstallID = [Guid]::NewGuid()
 $Global:id >$null 2>&1
 $Global:date
 
