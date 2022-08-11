@@ -117,11 +117,11 @@ the ability to determine the correct "latest version".
 <details>
 <summary>Org, App, and Team Email Administration</summary>
 
-App Center has a number of missing features regarding management of collaborators. 
+### App Center lacks several features regarding management of collaborators. 
 
 1. No Domain Restriction/Validation - we cannot limit the user to a specific domain.
-2. AAD Group membership applies to distributions groups alone. We do not support using AAD Groups for App Collaborators. However, unless the AAD group memebers are individually added to the group, they may not see availble releases. In generall, this feature doesn't work as you might expect or hope.  ``` [As of 8/1/2022]```
-3. The Portal behaves oddly if you have a bulk set of emails to add. 
+2. Relying on AAD Group memenber alone, Testers do not receive email notifications for Org|App|New Releases. In fact, I do not have any knowledge of any notification for users added purely through AAD group membership. However, using the [install portal](https://install.appcenter.ms), AAD group membership will allow testers access to Apps to which they belong. 
+3. The Portal behaves oddly when using bulk set of emails|data into web forms. 
 
 The following scripts may be useful to you when working with collaborators. 
 
